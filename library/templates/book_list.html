@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Китептердин тизмеси</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Китептердин тизмеси</h1>
+        <a href="{{ url_for('add_book') }}" class="button">Китеп кошуу</a>
+        {% if books %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Аталышы</th>
+                    <th>Автору</th>
+                    <th>Жылы</th>
+                    <th>Саны</th>
+                    <th>Аракеттер</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.year }}</td>
+                    <td>{{ book.quantity }}</td>
+                    <td>
+                        {% if book.quantity > 0 %}
+                        <a href="{{ url_for('borrow_book', book_id=book.id) }}" class="button small">Берүү</a>
+                        {% else %}
+                        <span class="unavailable">Китепканада жок</span>
+                        {% endif %}
+                        <a href="{{ url_for('delete_book', book_id=book.id) }}" class="button small delete-button">Өчүрүү</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Китепканада азырынча китептер жок.</p>
+        {% endif %}
+        <p><a href="{{ url_for('index') }}">Башкы бетке</a></p>
+    </div>
+</body>
+</html>

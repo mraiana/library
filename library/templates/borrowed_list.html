@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Берилген китептер</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Берилген китептер</h1>
+        {% if borrowed_books %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Китеп</th>
+                    <th>Окурман</th>
+                    <th>Берилген күнү</th>
+                    <th>Кайтаруу күнү</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for borrowing in borrowed_books %}
+                <tr>
+                    <td>{{ borrowing.book.title }}</td>
+                    <td>{{ borrowing.reader.full_name }}</td>
+                    <td>{{ borrowing.borrow_date.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                    <td>{{ borrowing.due_date.strftime('%Y-%m-%d') if borrowing.due_date else '-' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>Берилген китептер жок.</p>
+        {% endif %}
+        <p><a href="{{ url_for('index') }}">Башкы бетке</a></p>
+    </div>
+</body>
+</html>
